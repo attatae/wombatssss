@@ -28,18 +28,23 @@
 
   <p>
     <%= check_box_tag(:time_begin) %> 
-   <%= f.label :time, :class => 'grey' %><br/>
+   <%= f.label :time %><br/>
     <%= f.time_select :time_begin, :ampm => true, include_blank: true, :disabled => true, :default => {:hour => '19', :minute => '00'} %>
   </p>
 
   <p>
     <%= check_box_tag(:location) %>
-    <%= f.label :location , :class =>'grey'  %><br/>
-    <%= f.text_field :location, :disabled => true %> </span></p>
+    <%= f.label :location   %><br/>
+    <div id="div_location">
+      <%= f.text_field :location, :disabled => true %> </span>
+    </div>
+
     <%= check_box_tag(:address) %>
-    <%= f.label :address, :class =>'grey' %>
-    <p><%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
-  </p>
+    <%= f.label :address %>
+    <div id="div_address">
+      <p><%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
+    </div>
+    </p>
   
   
  <div class="form-actions">
@@ -48,3 +53,17 @@
   </p>
   </div>
 <% end %>
+<script>
+   $(document).ready(function(){
+       $('#div_location').click(function(){
+           $(this).find('input').prop('disabled',false);
+           $('#location').prop('checked', true)
+       });
+       $('#div_address').click(function(){
+           $(this).find('input').prop('disabled',false);
+           $('#address').prop('checked', true)
+       });
+
+   });
+
+</script>
