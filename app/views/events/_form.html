@@ -28,21 +28,25 @@
 
   <p>
     <%= check_box_tag(:time_begin) %> 
-   <%= f.label :time %><br/>
+   <%= f.label :time, :class => 'grey' %><br/>
     <%= f.time_select :time_begin, :ampm => true, include_blank: true, :disabled => true, :default => {:hour => '19', :minute => '00'} %>
   </p>
 
   <p>
     <%= check_box_tag(:location) %>
-    <%= f.label :location   %><br/>
-    <div id="div_location">
-      <%= f.text_field :location, :disabled => true %> </span>
+    <%= f.label :location , :class => 'grey'  %><br/></span>
+  <div id="div_location" style="display:inline-block; position:relative;">
+      <%= f.text_field :location, :disabled => true %>
+    <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
     </div>
-
+ </br>
+     </p>
+     </p>
     <%= check_box_tag(:address) %>
-    <%= f.label :address %>
-    <div id="div_address">
-      <p><%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
+    <%= f.label :address, :class => 'grey' %></br>
+    <div id="div_address" style="display:inline-block; position:relative;">
+      <%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
+      <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
     </div>
     </p>
   
@@ -55,15 +59,34 @@
 <% end %>
 <script>
    $(document).ready(function(){
-       $('#div_location').click(function(){
-           $(this).find('input').prop('disabled',false);
-           $('#location').prop('checked', true)
-       });
-       $('#div_address').click(function(){
-           $(this).find('input').prop('disabled',false);
-           $('#address').prop('checked', true)
-       });
 
+
+//       $("#div_location  div").on("click", function (evt) {
+//           alert("asdf");
+//           $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
+//       });
+
+       $("#div_location  div").on("click",function(){
+//           alert("hello");
+           if  ( ! $('#location').is(":checked")) {
+               $('#location').next().toggleClass('grey')
+//               $(this).find('input').prop('disabled',false);
+//               $(this).closest('input').attr('disabled', 'disabled');
+//               $(this).closest('input').removeAttr('disabled');
+               $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
+               $('#location').prop('checked', true)
+           }
+       });
+       $("#div_address  div").on("click",function(){
+//           alert("hello");
+           if( ! $('#address').is(":checked")){
+               $('#address').next().toggleClass('grey')
+//               $(this).find('input').prop('disabled',false);
+//               $(this).find('input').attr('disabled', 'disabled');
+//               $(this).find('input').removeAttr('disabled');
+               $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
+               $('#address').prop('checked', true)
+           }
+       });
    });
-
 </script>

@@ -25,16 +25,20 @@ $(document).ready ->
     $(this).next().toggleClass('grey')
     if $(this).is(":checked")
       $("#event_location").removeAttr("disabled").val ""
+      $("#div_location  div").hide();
     else
       $("#event_location").attr("disabled", "disabled").val ""
+      $("#div_location  div").show();
     return
 
   $("#address").change ->
     $(this).next().toggleClass('grey')
     if $(this).is(":checked")
       $("#event_address").removeAttr("disabled").val ""
+      $("#div_address div").hide();
     else
       $("#event_address").attr("disabled", "disabled").val ""
+      $("#div_address div").show();
     return
 
   return
