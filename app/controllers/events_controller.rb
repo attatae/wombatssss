@@ -11,19 +11,19 @@ class EventsController < ApplicationController
 	end
 
 	def create #save our new event to a database
-   params = event_params
-   date = nil
-   if hours = params['time_begin(4i)']
-     hours = params['time_begin(4i)']
-     minutes = params['time_begin(5i)']
-     date = Date.strptime(params[:event_start], "%Y-%m-%d")
-     date = DateTime.civil(date.year,date.month, date.day, hours.to_i, minutes.to_i, 0, 0)
-   #params[:time_begin] = date.to_s
-   end
-
-   @event = Event.new(title: params[:title],text: params[:text],address:params[:address],\
-                       location: params[:location],time_begin: date, event_start: params[:event_start])
-		#@event = current_user.events.new(params)
+   #params = event_params
+   #date = nil
+   #if hours = params['time_begin(4i)']
+   #  hours = params['time_begin(4i)']
+   #  minutes = params['time_begin(5i)']
+   #  date = Date.strptime(params[:event_start], "%Y-%m-%d")
+   #  date = DateTime.civil(date.year,date.month, date.day, hours.to_i, minutes.to_i, 0, 0)
+   ##params[:time_begin] = date.to_s
+   #end
+   #
+   #@event = Event.new(title: params[:title],text: params[:text],address:params[:address],\
+   #                    location: params[:location],time_begin: date, event_start: params[:event_start])
+		@event = Event.new(event_params)
 
 		#respond_to do|format|
 
