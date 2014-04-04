@@ -11,12 +11,12 @@
 	<p>
 		
 <h3><%= @event.event_start.strftime("%B %e, %Y") %></h3>
-<%= @event.time_begin.strftime ("%I:%M %p") if @event.time_begin %>
-<h3><%= @event.location %></h3>
- <p><%= @event.address %></p>
+<%= @event.time_begin.strftime ("%I:%M %p") if  @event.show_time %>
+<h3><%= @event.location if @event.show_location %></h3>
+ <p><%= @event.address if @event.show_address%></p>
 
 
-		
+
 	<!--Location and time, but not validated. Later, possibly JS prompts.-->
 
 

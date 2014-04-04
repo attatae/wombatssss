@@ -31,6 +31,7 @@
    <%= f.label :time, :class => 'grey' %><br/>
    <div id="div_time" style="display:inline-block; position:relative;">
     <%= f.time_select :time_begin, :ampm => true, include_blank: true, :disabled => true, :default => {:hour => '19', :minute => '00'} %>
+    <%= f.hidden_field :show_time, :value => false %>
     <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
    </div>
   </p>
@@ -40,6 +41,7 @@
     <%= f.label :location , :class => 'grey'  %><br/></span>
   <div id="div_location" style="display:inline-block; position:relative;">
       <%= f.text_field :location, :disabled => true %>
+      <%= f.hidden_field :show_location, :value => false %>
     <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
     </div>
  </br>
@@ -49,6 +51,7 @@
     <%= f.label :address, :class => 'grey' %></br>
     <div id="div_address" style="display:inline-block; position:relative;">
       <%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
+      <%= f.hidden_field :show_address, :value => false %>
       <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
     </div>
     </p>
@@ -61,110 +64,128 @@
   </div>
 <% end %>
 <script>
-   $(document).ready(function(){
+    $(document).ready(function(){
 
 //------------------------------------------------------
-       $("#time_begin").change(function() {
-           $(this).next().toggleClass('grey');
-           if ($(this).is(":checked")) {
+        $("#time_begin").change(function() {
+            var $time_4i =  $("#event_time_begin_4i") ;
+            var $time_5i =  $("#event_time_begin_5i") ;
+            if ($(this).is(":checked")) {
+                $("#event_show_time").attr('value', false)
+                $(this).next().removeClass('grey');
+                if ( ($time_4i.attr("data") !=  undefined) && ($time_4i.attr("data").length > 0)) {
+                    $time_4i.removeAttr("disabled");
+                    $time_4i.val($time_4i.attr("data")).attr('selected', 'selected');
+                    $time_5i.removeAttr("disabled");
+                    $time_5i.val($time_5i.attr("data")).attr('selected', 'selected');
+                }
+                else
+                {
+                    $time_4i.removeAttr("disabled");
+                    $("#event_time_begin_4i option:eq(20)").prop('selected', true);
+                    $time_5i.removeAttr("disabled");
+                    $("#event_time_begin_5i option:eq(1)").prop('selected', true);
+                }
+                $("#div_time div").hide();
+            }
+            else
+            {
+                $("#event_show_time").attr('value', false)
+                $(this).next().addClass('grey');
+                $time_4i.attr("disabled", "disabled");
+                $time_5i.attr("disabled", "disabled");
+                $time_4i.attr("data",$time_4i.val()).val("");
+                $time_5i.attr("data",$time_5i.val()).val("");
 
-               $("#event_time_begin_4i").removeAttr("disabled");
-               $("#event_time_begin_4i").val($("#event_time_begin_4i").attr("data")).attr('selected', 'selected');
-               $("#event_time_begin_5i").removeAttr("disabled");
-               $("#event_time_begin_5i").val($("#event_time_begin_5i").attr("data")).attr('selected', 'selected');
+                $("#event_time_begin_4i option:eq(0)").prop('selected', true);
+                $("#event_time_begin_5i option:eq(0)").prop('selected', true);
+                $("#div_time div").show();
+            }
+        });
 
-//               $("#event_time_begin_4i option:eq(20)").prop('selected', true);
-//               $("#event_time_begin_5i option:eq(1)").prop('selected', true);
-               $("#div_time div").hide();
-           } else {
-               $("#event_time_begin_4i").attr("disabled", "disabled");
-               $("#event_time_begin_5i").attr("disabled", "disabled");
-               $("#event_time_begin_4i").attr("data",$("#event_time_begin_4i").val()).val("");
-               $("#event_time_begin_5i").attr("data",$("#event_time_begin_5i").val()).val("");
+        $("#location").change(function() {
+            $(this).next().toggleClass('grey');
+            if ($(this).is(":checked")) {
+                $("#event_show_location").attr('value', true)
+                $(this).next().removeClass('grey');
+                $("#event_location").removeAttr("disabled").val($("#event_location").attr("data"));
+                $("#div_location  div").hide();
+            } else {
+                $(this).next().addClass('grey');
+                $("#event_location").attr("disabled", "disabled").attr("data",$("#event_location").val()).val("");
+                $("#div_location  div").show();
+                $("#event_show_location").attr('value', false)
+            }
+        });
+        $("#address").change(function() {
+            $(this).next().toggleClass('grey');
+            if ($(this).is(":checked")) {
+                $("#event_show_address").attr('value', true)
+                $("#event_address").removeAttr("disabled").val($("#event_address").attr("data"));
+                $("#div_address div").hide();
+            } else {
+                $("#event_address").attr("disabled", "disabled").attr("data",$("#event_address").val()).val("");
+                $("#div_address div").show();
+                $("#event_show_address").attr('value', false)
+            }
+        });
+//- Enabling fields while editing fields
 
-               $("#event_time_begin_4i option:eq(0)").prop('selected', true);
-               $("#event_time_begin_5i option:eq(0)").prop('selected', true);
-               $("#div_time div").show();
-           }
-       });
-       $("#location").change(function() {
-           $(this).next().toggleClass('grey');
-           if ($(this).is(":checked")) {
-//               $("#event_location").removeAttr("disabled").val("");
-               $("#event_location").removeAttr("disabled").val($("#event_location").attr("data"));
-               $("#div_location  div").hide();
-           } else {
-//               $("#event_location").attr("disabled", "disabled").val("");
-               $("#event_location").attr("disabled", "disabled").attr("data",$("#event_location").val()).val("");
-               $("#div_location  div").show();
-           }
-       });
-       $("#address").change(function() {
-           $(this).next().toggleClass('grey');
-           if ($(this).is(":checked")) {
-               $("#event_address").removeAttr("disabled").val($("#event_address").attr("data"));
-               $("#div_address div").hide();
-           } else {
-               $("#event_address").attr("disabled", "disabled").attr("data",$("#event_address").val()).val("");
-               $("#div_address div").show();
-           }
-       });
-//-----------------------------------------------------------
-
-       if ($('#event_location').val().length > 0){
-           console.log($('#event_location').val());
-           $('#location').next().removeClass('grey')
-           $('#event_location').prop("disabled", false).focus();
-           $("#div_location  div").hide();
-           $('#location').prop('checked', true)
-       }
-       if ($('#event_address').val().length > 0){
-           console.log($('#event_location').val());
-           $('#address').next().removeClass('grey');
-           $('#event_address').prop("disabled", false).focus();
-           $("#div_address div").hide();
-           $('#address').prop('checked', true);
-       }
-       if ($("#event_time_begin_4i option:selected").val().length > 0){
-           $('#time_begin').next().removeClass('grey')
-           $('#time_begin').prop('checked', true)
-           $("#event_time_begin_4i").prop('disabled', false)
-           $("#event_time_begin_5i").prop('disabled', false)
-           $("#div_time  div").hide();
-       }
+        if ($('#event_location').val().length > 0){
+            $('#location').next().removeClass('grey')
+            $('#event_location').prop("disabled", false).focus();
+            $("#div_location  div").hide();
+            $('#location').prop('checked', true)
+            $("#event_show_location").attr('value', true)
+        }
+        if ($('#event_address').val().length > 0){
+            $('#address').next().removeClass('grey');
+            $('#event_address').prop("disabled", false).focus();
+            $("#div_address div").hide();
+            $('#address').prop('checked', true);
+            $("#event_show_address").attr('value', true)
+        }
+        if ($("#event_time_begin_4i option:selected").val().length > 0){
+            $('#time_begin').next().removeClass('grey')
+            $('#time_begin').prop('checked', true)
+            $("#event_time_begin_4i").prop('disabled', false)
+            $("#event_time_begin_5i").prop('disabled', false)
+            $("#div_time  div").hide();
+            $("#event_show_time").attr('value', true)
+        }
 
 
-       $("#div_location  div").on("click",function(){
-//           alert("hello");
-           if  ( ! $('#location').is(":checked")) {
-               $('#location').next().toggleClass('grey')
-               $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
-               $('#location').prop('checked', true)
-               $("#event_location").val($("#event_address").attr("data"));
+//  related to while click on a field
 
-           }
-       });
+        $("#div_location  div").on("click",function(){
+            if  ( ! $('#location').is(":checked")) {
+                $('#location').next().toggleClass('grey')
+                $(this).hide().prev().prev("input[disabled]").prop("disabled", false).focus();
+                $('#location').prop('checked', true)
+                $("#event_location").val($("#event_address").attr("data"));
+                $("#div_location  div").hide();
+            }
+        });
 
-       $("#div_time  div").on("click",function(){
-//           alert("hello");
-           if  ( ! $('#time_begin').is(":checked")) {
-               $('#time_begin').next().toggleClass('grey')
-               $("#div_time  div").hide().parent().find('select').each(function( index ) { $(this).prop("disabled", false).focus() });
-               $('#time_begin').prop('checked', true)
-               $("#event_time_begin_4i option:eq(20)").prop('selected', true)
-               $("#event_time_begin_5i option:eq(1)").prop('selected', true)
-               $("#event_time_begin_4i").val($("#event_time_begin_4i").attr("data"));
-           }
-       });
+        $("#div_time  div").on("click",function(){
+            if  ( ! $('#time_begin').is(":checked")) {
+                $('#time_begin').next().toggleClass('grey')
+                $("#div_time  div").hide().parent().find('select').each(function( index ) { $(this).prop("disabled", false).focus() });
+                $('#time_begin').prop('checked', true)
+                $("#event_time_begin_4i option:eq(20)").prop('selected', true)
+                $("#event_time_begin_5i option:eq(1)").prop('selected', true)
+                $("#div_time  div").hide()
+            }
+        });
 
-       $("#div_address  div").on("click",function(){
-//           alert("hello");
-           if( ! $('#address').is(":checked")){
-               $('#address').next().toggleClass('grey')
-               $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
-               $('#address').prop('checked', true)
-               $("#event_address").val($("#event_address").attr("data"));
-           }
-       });
-   });
+        $("#div_address  div").on("click",function(){
+            if( ! $('#address').is(":checked")){
+                $('#address').next().toggleClass('grey')
+                $(this).hide().prev().prev("input[disabled]").prop("disabled", false).focus();
+                $('#address').prop('checked', true)
+                $("#event_address").val($("#event_address").attr("data"));
+                $("#div_address div").hide()
+            }
+        });
+    });
 </script>
