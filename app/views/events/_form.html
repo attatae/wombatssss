@@ -31,7 +31,7 @@
    <%= f.label :time, :class => 'grey' %><br/>
    <div id="div_time" style="display:inline-block; position:relative;">
     <%= f.time_select :time_begin, :ampm => true, include_blank: true, :disabled => true, :default => {:hour => '19', :minute => '00'} %>
-    <%= f.hidden_field :show_time, :value => false %>
+    <%= f.hidden_field :show_time, :value => true %>
     <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
    </div>
   </p>
@@ -41,7 +41,7 @@
     <%= f.label :location , :class => 'grey'  %><br/></span>
   <div id="div_location" style="display:inline-block; position:relative;">
       <%= f.text_field :location, :disabled => true %>
-      <%= f.hidden_field :show_location, :value => false %>
+      <%= f.hidden_field :show_location, :value => true %>
     <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
     </div>
  </br>
@@ -51,7 +51,7 @@
     <%= f.label :address, :class => 'grey' %></br>
     <div id="div_address" style="display:inline-block; position:relative;">
       <%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
-      <%= f.hidden_field :show_address, :value => false %>
+      <%= f.hidden_field :show_address, :value => true %>
       <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
     </div>
     </p>
@@ -71,7 +71,7 @@
             var $time_4i =  $("#event_time_begin_4i") ;
             var $time_5i =  $("#event_time_begin_5i") ;
             if ($(this).is(":checked")) {
-                $("#event_show_time").attr('value', false)
+                $("#event_show_time").attr('value', true)
                 $(this).next().removeClass('grey');
                 if ( ($time_4i.attr("data") !=  undefined) && ($time_4i.attr("data").length > 0)) {
                     $time_4i.removeAttr("disabled");
