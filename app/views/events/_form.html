@@ -1,67 +1,80 @@
 <%= form_for @event do |f| %>
-  <% if @event.errors.any? %>
-  <div id="error_explanation">
+<% if @event.errors.any? %>
+<div id="error_explanation">
     <h2><%= pluralize(@event.errors.count, "error") %> prohibited
-      this post from being saved:</h2>
+        this post from being saved:</h2>
     <ul>
-    <% @event.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
+        <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
     </ul>
-  </div>
-  <% end %>
+</div>
+<% end %>
 
-  <p>
+<p>
     <%= f.label :event_title %><br/>
     <%= f.text_field :title %>
-  </p>
+</p>
 
-  <p>
+<p>
     <%= f.label :event_start %><br/>
     <%= f.text_field :event_start %> <span class="gray-text"><em>yyyy-mm-dd</em></span> <!--wasn't working once, although rarer than before.)-->
-  </p>
+</p>
 
-  <p>
+<p>
     <%= f.label :text %><br/>
     <%= f.text_area :text %>
-  </p>
+</p>
 
-  <p>
-    <%= check_box_tag(:time_begin) %> 
-   <%= f.label :time, :class => 'grey' %><br/>
-   <div id="div_time" style="display:inline-block; position:relative;">
+<p>
+    <%= check_box_tag(:time_begin) %>
+    <%= f.label :time, :class => 'grey' %><br/>
+<div id="div_time" style="display:inline-block; position:relative;">
     <%= f.time_select :time_begin, :ampm => true, include_blank: true, :disabled => true, :default => {:hour => '19', :minute => '00'} %>
-    <%= f.hidden_field :show_time, :value => true %>
+    <% if @event.show_time  %>
+    <%= f.hidden_field :show_time, :value => true  %>
+    <% else %>
+    <%= f.hidden_field :show_time, :value => false %>
+    <% end %>
     <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
-   </div>
-  </p>
+</div>
+</p>
 
-  <p>
+<p>
     <%= check_box_tag(:location) %>
-    <%= f.label :location , :class => 'grey'  %><br/></span>
-  <div id="div_location" style="display:inline-block; position:relative;">
-      <%= f.text_field :location, :disabled => true %>
-      <%= f.hidden_field :show_location, :value => true %>
+    <%= f.label :location , :class => 'grey'  %><br/><span></span>
+<div id="div_location" style="display:inline-block; position:relative;">
+    <%= f.text_field :location, :disabled => true %>
+    <% if @event.show_location  %>
+    <%= f.hidden_field :show_location, :value => true  %>
+    <% else %>
+    <%= f.hidden_field :show_location, :value => false %>
+    <% end %>
+
     <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
-    </div>
- </br>
-     </p>
-     </p>
-    <%= check_box_tag(:address) %>
-    <%= f.label :address, :class => 'grey' %></br>
-    <div id="div_address" style="display:inline-block; position:relative;">
-      <%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
-      <%= f.hidden_field :show_address, :value => true %>
-      <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
-    </div>
+</div>
+</br>
+</p>
+</p>
+<%= check_box_tag(:address) %>
+<%= f.label :address, :class => 'grey' %></br>
+<div id="div_address" style="display:inline-block; position:relative;">
+    <%= f.text_field :address, :disabled => true%>  <!--later can make these placeholders and jscript. Once scoped to IE versions.-->
+    <% if @event.show_address  %>
+    <%= f.hidden_field :show_address, :value => true  %>
+    <% else %>
+    <%= f.hidden_field :show_address, :value => false %>
+    <% end %>
+    <div style="position:absolute; left:0; right:0; top:0; bottom:0;"></div>
+</div>
+</p>
+
+
+<div class="form-actions">
+    <p>
+        <%= f.button :Submit, :class => 'btn btn-large btn-primary' %>
     </p>
-  
-  
- <div class="form-actions">
-  <p>
-    <%= f.button :Submit, :class => 'btn btn-large btn-primary' %>
-  </p>
-  </div>
+</div>
 <% end %>
 <script>
     $(document).ready(function(){
@@ -104,10 +117,9 @@
         });
 
         $("#location").change(function() {
-            $(this).next().toggleClass('grey');
             if ($(this).is(":checked")) {
-                $("#event_show_location").attr('value', true)
                 $(this).next().removeClass('grey');
+                $("#event_show_location").attr('value', true)
                 $("#event_location").removeAttr("disabled").val($("#event_location").attr("data"));
                 $("#div_location  div").hide();
             } else {
@@ -118,12 +130,13 @@
             }
         });
         $("#address").change(function() {
-            $(this).next().toggleClass('grey');
             if ($(this).is(":checked")) {
+                $(this).next().removeClass('grey');
                 $("#event_show_address").attr('value', true)
                 $("#event_address").removeAttr("disabled").val($("#event_address").attr("data"));
                 $("#div_address div").hide();
             } else {
+                $(this).next().addClass('grey');
                 $("#event_address").attr("disabled", "disabled").attr("data",$("#event_address").val()).val("");
                 $("#div_address div").show();
                 $("#event_show_address").attr('value', false)
@@ -131,27 +144,56 @@
         });
 //- Enabling fields while editing fields
 
-        if ($('#event_location').val().length > 0){
+        if ($("#event_show_location").attr('value') == "true"){
+//           # if show_location value is true
             $('#location').next().removeClass('grey')
             $('#event_location').prop("disabled", false).focus();
             $("#div_location  div").hide();
             $('#location').prop('checked', true)
-            $("#event_show_location").attr('value', true)
+//            $("#event_show_location").attr('value', true)
         }
-        if ($('#event_address').val().length > 0){
+        else
+        {
+            $("#event_location").attr("disabled", "disabled").attr("data",$("#event_location").val()).val("");
+            $("#div_address div").show();
+            $("#event_show_location").attr('value', false)
+        }
+
+        if ($("#event_show_address").attr('value') == "true"){
             $('#address').next().removeClass('grey');
             $('#event_address').prop("disabled", false).focus();
             $("#div_address div").hide();
             $('#address').prop('checked', true);
-            $("#event_show_address").attr('value', true)
+//            $("#event_show_address").attr('value', true)
         }
-        if ($("#event_time_begin_4i option:selected").val().length > 0){
+        else
+        {
+            $("#event_address").attr("disabled", "disabled").attr("data",$("#event_address").val()).val("");
+            $("#div_address div").show();
+            $("#event_show_address").attr('value', false)
+        }
+
+        if ($("#event_show_time").attr('value') == "true"){
             $('#time_begin').next().removeClass('grey')
             $('#time_begin').prop('checked', true)
             $("#event_time_begin_4i").prop('disabled', false)
             $("#event_time_begin_5i").prop('disabled', false)
             $("#div_time  div").hide();
-            $("#event_show_time").attr('value', true)
+//            $("#event_show_time").attr('value', true)
+        }
+        else
+        {
+            var $time_4i =  $("#event_time_begin_4i") ;
+            var $time_5i =  $("#event_time_begin_5i") ;
+            $("#event_show_time").attr('value', false)
+            $time_4i.attr("disabled", "disabled");
+            $time_5i.attr("disabled", "disabled");
+            $time_4i.attr("data",$time_4i.val()).val("");
+            $time_5i.attr("data",$time_5i.val()).val("");
+
+            $("#event_time_begin_4i option:eq(0)").prop('selected', true);
+            $("#event_time_begin_5i option:eq(0)").prop('selected', true);
+            $("#div_time div").show();
         }
 
 
