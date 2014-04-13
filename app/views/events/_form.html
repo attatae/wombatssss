@@ -145,12 +145,10 @@
 //- Enabling fields while editing fields
 
         if ($("#event_show_location").attr('value') == "true"){
-//           # if show_location value is true
             $('#location').next().removeClass('grey')
             $('#event_location').prop("disabled", false).focus();
             $("#div_location  div").hide();
             $('#location').prop('checked', true)
-//            $("#event_show_location").attr('value', true)
         }
         else
         {
@@ -164,7 +162,6 @@
             $('#event_address').prop("disabled", false).focus();
             $("#div_address div").hide();
             $('#address').prop('checked', true);
-//            $("#event_show_address").attr('value', true)
         }
         else
         {
@@ -179,7 +176,6 @@
             $("#event_time_begin_4i").prop('disabled', false)
             $("#event_time_begin_5i").prop('disabled', false)
             $("#div_time  div").hide();
-//            $("#event_show_time").attr('value', true)
         }
         else
         {
