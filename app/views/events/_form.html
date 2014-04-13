@@ -202,6 +202,7 @@
                 $('#location').prop('checked', true)
                 $("#event_location").val($("#event_address").attr("data"));
                 $("#div_location  div").hide();
+                $("#event_show_location").attr('value', true)
             }
         });
 
@@ -213,6 +214,7 @@
                 $("#event_time_begin_4i option:eq(20)").prop('selected', true)
                 $("#event_time_begin_5i option:eq(1)").prop('selected', true)
                 $("#div_time  div").hide()
+                $("#event_show_time").attr('value', true)
             }
         });
 
@@ -223,6 +225,7 @@
                 $('#address').prop('checked', true)
                 $("#event_address").val($("#event_address").attr("data"));
                 $("#div_address div").hide()
+                $("#event_show_address").attr('value', true)
             }
         });
     });
