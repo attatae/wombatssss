@@ -85,18 +85,16 @@
             var $time_5i =  $("#event_time_begin_5i") ;
             if ($(this).is(":checked")) {
                 $("#event_show_time").attr('value', true)
+                $time_4i.removeAttr("disabled");
+                $time_5i.removeAttr("disabled");
                 $(this).next().removeClass('grey');
                 if ( ($time_4i.attr("data") !=  undefined) && ($time_4i.attr("data").length > 0)) {
-                    $time_4i.removeAttr("disabled");
                     $time_4i.val($time_4i.attr("data")).attr('selected', 'selected');
-                    $time_5i.removeAttr("disabled");
                     $time_5i.val($time_5i.attr("data")).attr('selected', 'selected');
                 }
                 else
                 {
-                    $time_4i.removeAttr("disabled");
                     $("#event_time_begin_4i option:eq(20)").prop('selected', true);
-                    $time_5i.removeAttr("disabled");
                     $("#event_time_begin_5i option:eq(1)").prop('selected', true);
                 }
                 $("#div_time div").hide();
@@ -211,8 +209,17 @@
                 $('#time_begin').next().toggleClass('grey')
                 $("#div_time  div").hide().parent().find('select').each(function( index ) { $(this).prop("disabled", false).focus() });
                 $('#time_begin').prop('checked', true)
-                $("#event_time_begin_4i option:eq(20)").prop('selected', true)
-                $("#event_time_begin_5i option:eq(1)").prop('selected', true)
+                var $time_4i = $("#event_time_begin_4i")
+                var $time_5i = $("#event_time_begin_5i")
+                if ( ($time_4i.attr("data") !=  undefined) && ($time_4i.attr("data").length > 0)) {
+                    $time_4i.val($time_4i.attr("data")).attr('selected', 'selected');
+                    $time_5i.val($time_5i.attr("data")).attr('selected', 'selected');
+                }
+                else
+                {
+                    $("#event_time_begin_4i option:eq(20)").prop('selected', true);
+                    $("#event_time_begin_5i option:eq(1)").prop('selected', true);
+                }
                 $("#div_time  div").hide()
                 $("#event_show_time").attr('value', true)
             }
