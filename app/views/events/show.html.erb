@@ -11,7 +11,7 @@
 	<p>
 		
 <h3><%= @event.event_start.strftime("%B %e, %Y") %></h3>
-<%= @event.time_begin.strftime ("%I:%M %p") if  @event.show_time %>
+<%= @event.time_begin.strftime ("%I:%M %p") if  @event.show_time && @event.time_begin %>
 <h3><%= @event.location if @event.show_location %></h3>
  <p><%= @event.address if @event.show_address%></p>
 
