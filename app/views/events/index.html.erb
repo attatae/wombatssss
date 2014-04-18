@@ -6,30 +6,33 @@
 <div id="post-btn-margin">
 </div>
 
-<% @events.each do |event| %>
-<div class="event">
-  <span id="event-title-underline"><span id="event-index-title"><%= link_to event.title, event %></span></span>
-  <p>
+<% @date_events_hash.each do |date, events| %>
+    <h2 class="date-text"> <%= date.strftime("%A, %b %e") %> </h2>
+    <% events.each do |event| %>
+        <div class="event">
+          <span id="event-title-underline"><span id="event-index-title"><%= link_to event.title, event %></span></span>
+          <p>
 
-  <%= event.text %><span class ="admin">
-      | <%= link_to "Edit", edit_event_path(event) %> |
-      <%= link_to "Delete", event, method: :delete, data: { confirm: "Are you sure?"} %>
-    </span>
-  </p>
+            <%= event.text %><span class ="admin">
+            | <%= link_to "Edit", edit_event_path(event) %> |
+            <%= link_to "Delete", event, method: :delete, data: { confirm: "Are you sure?"} %>
+            </span>
+          </p>
 
-  <!-- <span class="gray-text">
-      <%= event.time_begin.strftime ("%I:%M %p") if event.show_time && event.time_begin %>
-    </span> -->
+  <span class="gray-text">
+      <%= event.time_begin.strftime ("%I:%M %p") if event.show_time && event.time_begin%>
+  </span>
 
 
-  <div class="meta">
-    
-    <!--<span class="text">
-    <%= time_ago_in_words(event.created_at) + " ago" %>
-    </span>-->
-    
-  </div>
-</div>
+          <div class="meta">
+
+            <!--<span class="text">-->
+            <!--< time_ago_in_words(event.created_at) + " ago" %>-->
+            <!--</span>-->
+
+          </div>
+        </div>
+    <% end %>
 <% end %>
 
 

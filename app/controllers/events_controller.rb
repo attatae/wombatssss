@@ -3,8 +3,9 @@ class EventsController < ApplicationController
 	#added destroy to above, not in Treebook
 
 	def index
-		@events = Event.all 
-	end
+    @events = Event.order(time_begin: :asc)
+    @date_events_hash = @events.group_by{ |event| event.event_start }.sort_by{|k,v| k }.reverse
+  end
 	
 	def new # diff between new and create?
 		@event = Event.new
