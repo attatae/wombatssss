@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-	before_filter :authenticate_user!, only: [:create, :new, :edit, :update, :destroy]
+	before_filter :authenticate_user!, only: [:create, :new, :edit, :update, :destroy, :attend]
 	#added destroy to above, not in Treebook
 
 	def index
@@ -71,6 +71,12 @@ class EventsController < ApplicationController
 
 		redirect_to events_path
 	end
+
+  def attend
+    @event = Event.find(params[:id])
+
+    current_user.attend(@event, !params[:miss])
+  end
 
 #def status_params
 #    params.require(:status).permit(:name, :content, :user_id)

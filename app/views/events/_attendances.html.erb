@@ -1,0 +1,28 @@
+<div data-event-time="<%= @event.event_time %>">
+  <% case current_user.attend_to?(@event) %>
+  <% when true %>
+    You are going. <%= link_to "Edit", attend_event_path(@event, miss: true), class: "hidden-past-event", remote: true, method: :post %>
+  <% when false %>
+    Unavailable. <%= link_to "Edit", attend_event_path(@event), class: "hidden-past-event", remote: true, method: :post %>
+  <% else %>
+    <div class="hidden-past-event">
+      <p>Are you going?</p>
+      <div>
+        <%= link_to "Yes", attend_event_path(@event), class: "btn btn-large btn-primary", remote: true, method: :post %>
+        <%= link_to "No", attend_event_path(@event, miss: true), class: "btn btn-large btn-link", remote: true, method: :post %>
+      </div>
+    </div>
+  <% end if user_signed_in? %>
+
+  <hr/>
+
+  <p><%= @event.guests.size %> <span class="hidden-past-event">Attending</span><span class="visible-past-event">Attended</span></p>
+
+  <hr/>
+
+  <ul class="list-unstyled">
+    <% @event.guests.each do |user| %>
+      <li><%= user.full_name %></li>
+    <% end %>
+  </ul>
+</div>

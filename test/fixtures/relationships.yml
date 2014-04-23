@@ -3,11 +3,11 @@
 one:
   follower_id: 1
   followed_id: 2
-  user: chris
-  friend: todd
+  # user: chris
+  # friend: todd
 
 two:
   follower_id: 3
   followed_id: 4
-  user: todd
-  friend: chris
+  # user: todd
+  # friend: chris
