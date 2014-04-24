@@ -1,4 +1,4 @@
-<div data-event-time="<%= @event.event_time %>">
+<div data-event-time="<%= @event.event_time.strftime("%FT%T%:z") %>">
   <% case current_user.attend_to?(@event) %>
   <% when true %>
     <span class="visible-past-event">You went.</span>
