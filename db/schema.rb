@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20140422190541) do
 
   create_table "events", force: true do |t|
     t.string   "title"
-    t.time     "time_begin"
+    t.datetime "time_begin"
     t.string   "location"
     t.date     "event_start"
     t.text     "text"
@@ -90,3 +90,4 @@ ActiveRecord::Schema.define(version: 20140422190541) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
+

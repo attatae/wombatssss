@@ -1,23 +1,26 @@
-<div data-event-time="<%= @event.event_time.strftime("%FT%T%:z") %>">
+<div>
   <% case current_user.attend_to?(@event) %>
   <% when true %>
-    <span class="visible-past-event">You went.</span>
-    <span class="hidden-past-event">You are going. <%= link_to "Edit", attend_event_path(@event, miss: true), remote: true, method: :post %></span>
+    <% if @event.rsvp_active? %>
+      You are going. <%= link_to "Edit", attend_event_path(@event, miss: true), remote: true, method: :post %>
+    <% else %>
+      You went.
+    <% end %>
   <% when false %>
-    Unavailable. <%= link_to "Edit", attend_event_path(@event), class: "hidden-past-event", remote: true, method: :post %>
+    Unavailable. <%= link_to "Edit", attend_event_path(@event), remote: true, method: :post if @event.rsvp_active? %>
   <% else %>
-    <div class="hidden-past-event">
+    <% if @event.rsvp_active? %>
       <p>Are you going?</p>
       <div>
         <%= link_to "Yes", attend_event_path(@event), class: "btn btn-large btn-primary", remote: true, method: :post %>
         <%= link_to "No", attend_event_path(@event, miss: true), class: "btn btn-large btn-link", remote: true, method: :post %>
       </div>
-    </div>
+    <% end %>
   <% end if user_signed_in? %>
 
   <hr/>
 
-  <p><%= @event.guests.size %> <span class="hidden-past-event">Attending</span><span class="visible-past-event">Attended</span></p>
+  <p><%= @event.guests.size %> <%= @event.rsvp_active? ? "Attending" : "Attended" %></p>
 
   <hr/>
 
