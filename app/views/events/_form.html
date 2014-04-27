@@ -80,11 +80,24 @@
     $(document).ready(function(){
 
 //------------------------------------------------------
+        $("#event_event_start").change(function() {
+            var a = $(this).val().split("-");
+            $("#event_time_begin_1i").val(a[0]);
+            $("#event_time_begin_2i").val(a[1]);
+            $("#event_time_begin_3i").val(a[2]);
+        });
+
         $("#time_begin").change(function() {
+            var $time_1i =  $("#event_time_begin_1i") ;
+            var $time_2i =  $("#event_time_begin_2i") ;
+            var $time_3i =  $("#event_time_begin_3i") ;
             var $time_4i =  $("#event_time_begin_4i") ;
             var $time_5i =  $("#event_time_begin_5i") ;
             if ($(this).is(":checked")) {
                 $("#event_show_time").attr('value', true)
+                $time_1i.removeAttr("disabled");
+                $time_2i.removeAttr("disabled");
+                $time_3i.removeAttr("disabled");
                 $time_4i.removeAttr("disabled");
                 $time_5i.removeAttr("disabled");
                 $(this).next().removeClass('grey');
@@ -103,6 +116,9 @@
             {
                 $("#event_show_time").attr('value', false)
                 $(this).next().addClass('grey');
+                $time_1i.attr("disabled", "disabled");
+                $time_2i.attr("disabled", "disabled");
+                $time_3i.attr("disabled", "disabled");
                 $time_4i.attr("disabled", "disabled");
                 $time_5i.attr("disabled", "disabled");
                 $time_4i.attr("data",$time_4i.val()).val("");

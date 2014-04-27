@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 	#added destroy to above, not in Treebook
 
 	def index
-    @events = Event.where('event_start >= ?', DateTime.now).order(:event_start, :time_begin)
+    @events = Event.where('event_start >= ?', Date.today).order(:event_start, :time_begin)
     @date_events_hash = @events.group_by(&:event_start)
   end
 	

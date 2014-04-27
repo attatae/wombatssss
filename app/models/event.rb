@@ -12,8 +12,10 @@
  										length: {minimum: 10}
   
   def event_time
-    time = event_start.in_time_zone.end_of_day
-    time = time.change(hour: time_begin.hour, min: time_begin.min, sec: time_begin.sec) if show_time? && time_begin
-    time
+    show_time? && time_begin? ? time_begin.change(year: event_start.year, month: event_start.month, day: event_start.day) : event_start.in_time_zone
+  end
+
+  def rsvp_active?
+    (show_time? ? Time.now : Date.today) < event_time
   end
 end

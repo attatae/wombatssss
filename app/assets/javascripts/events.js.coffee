@@ -6,9 +6,6 @@ jQuery ->
   $('#event_event_start').datepicker
   	dateFormat: 'yy-mm-dd'
 
-  $('[data-event-time]').each ->
-    $(@).toggleClass 'event-passed', new Date($(@).data('event-time')) < new Date()
-
 #$(document).ready ->
 #  $("#time_begin").change ->
 #    $(this).next().toggleClass('grey')

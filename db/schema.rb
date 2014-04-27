@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20140422190541) do
 
   create_table "events", force: true do |t|
     t.string   "title"
-    t.time     "time_begin"
+    t.datetime "time_begin"
     t.string   "location"
     t.date     "event_start"
     t.text     "text"
