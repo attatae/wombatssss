@@ -8,7 +8,7 @@ gem 'devise'
 gem 'simple_form'
 gem 'jquery-ui-rails'
 gem 'pg'
-
+gem 'acts-as-taggable-on'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

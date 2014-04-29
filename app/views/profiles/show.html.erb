@@ -1,31 +1,34 @@
-<div class="page-header">
-	<h1><%= @user.full_name %></h1>
-</div>
 
-About me (limit to xy characters)<br/>
+<div class="profile-present">
+	<div id="profile-profile_name">
+		<h1>
+		  <p>
+			  <%= @profile.profile_name %></span>
+			</p>
+		</h1>
+	</div><hr/>
+		
+	<strong>About</strong>
+	<p>
+	  <%= @profile.about %>
+	</p>
 
-Passion Projects><br/>
+	<strong>Interests</strong>
+	<p>
+	  <%= raw @profile.interest_list.map { |t| link_to t, interest_path(t) }.join(', ') %>
+	</p>
 
-School<br/>
-Major:<br/>
+	<strong>Skills</strong>
+	<p>
+	  <%= raw @profile.skill_list.map { |t| link_to t, skill_path(t) }.join(', ') %>
+	</p>
 
-Work<br/>
-Select to link to profiles/portfolio etc;<br/>
 
-Hobbies and Interests (tags)<br/>
-Tag cloud => to Events. Also finds other users. Users found may be cloaked or not, depending on choice. If cloaked, does not show events will be at (well, maybe option.)
 
-My Calendar<br/>
+<%= link_to 'Edit Profile', edit_profile_path(@profile) %> |
+<%= link_to 'Back to Profiles', profiles_path %>
 
-IE "My calendar/myevents" vs all events (events page.)" -->
 
-<!--
-<% if @events %>
-	<% @events.each do |event| %>
-		<div class="profile">
-			<%= event.title %>
-			
-			<%= link_to time_ago_in_words(event.created_at) + " ago", event_path(event) %> 
-		</div>
-	<% end %>
-<% end %> -->
+
+
+<hr />

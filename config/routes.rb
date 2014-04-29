@@ -1,6 +1,12 @@
 Network::Application.routes.draw do
+  resources :profiles 
+
   get "profiles/show"
   devise_for :users, :controllers => {:registrations => "users/registrations"}
+
+  get 'tags/:tag', to: 'events#index', as: :tag 
+  get 'interests/:interest', to: 'profiles#index', as: :interest 
+  get 'skills/:skill', to: 'profiles#index', as: :skill
 
   devise_scope :user do
     get 'signup', to: 'devise/registrations#new' 
