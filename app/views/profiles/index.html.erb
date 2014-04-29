@@ -3,20 +3,6 @@
 </div>
 
 <p>
-<div class="tag_cloud">
-  <% tag_cloud Profile.interest_counts, %w{s m l} do |interest, css_class| %>
-    <%= link_to interest.name, interest_path(interest.name), class: css_class %>
-  <% end %>
-</div>
-</p>
-
-<p>
-<div class="tag_cloud">
-  <% tag_cloud Profile.skill_counts, %w{s m l} do |skill, css_class| %>
-    <%= link_to skill.name, skill_path(skill.name), class: css_class %>
-  <% end %>
-</div>
-</p>
 
 <%= link_to 'New Profile', new_profile_path, class: "btn btn-primary" %>
 <div id="post-btn-margin"><!--creates separation under button-->

@@ -4,6 +4,6 @@ class AddUserIdToComments < ActiveRecord::Migration
   	#after fixing profile_name (manually from schema and loading from there) started getting this error.
   	#add_index :comments, :user_id
   	#says it already exists
-  	remove_column :comments, :commenter
+  	#remove_column :comments, :commenter
   end
 end
